@@ -1,3 +1,5 @@
+//Math Functions
+
 function add(a, b) {
   return a + b;
 }
@@ -30,8 +32,6 @@ function power(a, b) {
   return a ** b;
 }
 
-let numberFirst, numberSecond, operator;
-
 function operate(op, num1, num2) {
   let result;
   switch (op) {
@@ -50,8 +50,32 @@ function operate(op, num1, num2) {
     case "%":
       result = mod(num1, num2);
       break;
-    case "**":
+    case "^":
       result = power(num1, num2);
   }
   return result;
 }
+
+let numberFirst, numberSecond, operator;
+const container = document.querySelector(".container");
+const calcButtons = document.querySelector(".calculator-buttons");
+const btnChangeSign = document.querySelector("#change-sign");
+const btnMod = document.querySelector("#mod");
+const btnEqual = document.querySelector("#equal");
+const btnSeven = document.querySelector("#seven");
+const btnEight = document.querySelector("#eight");
+const btnNine = document.querySelector("#nine");
+const btnDivide = document.querySelector("#divide");
+const btnFour = document.querySelector("#four");
+const btnFive = document.querySelector("#five");
+const btnSix = document.querySelector("#six");
+const btnMultiply = document.querySelector("#multiply");
+const btnOne = document.querySelector("#one");
+const btnTwo = document.querySelector("#two");
+const btnThree = document.querySelector("#three");
+const btnAdd = document.querySelector("#add");
+const btnZero = document.querySelector("#zero");
+const btnDot = document.querySelector("#dot");
+const btnPower = document.querySelector("#power");
+const btnSubtract = document.querySelector("#subtract");
+const btnClear = document.querySelector("#clear");
