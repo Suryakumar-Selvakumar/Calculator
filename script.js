@@ -1,7 +1,6 @@
 //Variables
 
-const result = 0;
-let numberFirst, numberSecond, operator;
+let numberFirst, numberSecond, operator, result;
 const container = document.querySelector(".container");
 const calcButtons = document.querySelector(".calculator-buttons");
 const paraDisplay = document.querySelector("#display");
@@ -61,22 +60,17 @@ function power(a, b) {
 function operate(op, num1, num2) {
   switch (op) {
     case "+":
-      result = add(num1, num2);
-      break;
+      return add(num1, num2);
     case "-":
-      result = subtract(num1, num2);
-      break;
+      return subtract(num1, num2);
     case "*":
-      result = multiply(num1, num2);
-      break;
+      return multiply(num1, num2);
     case "/":
-      result = divide(num1, num2);
-      break;
+      return divide(num1, num2);
     case "%":
-      result = mod(num1, num2);
-      break;
+      return mod(num1, num2);
     case "^":
-      result = power(num1, num2);
+      return power(num1, num2);
   }
 }
 
@@ -140,6 +134,17 @@ function populateDisplay() {
   return parseFloat(DisplayNum.join(""));
 }
 
+//function to assign operator
+
+function getOperator() {
+  btnAdd.addEventListener("click", () => (operator = "+"));
+  btnSubtract.addEventListener("click", () => (operator = "-"));
+  btnMultiply.addEventListener("click", () => (operator = "*"));
+  btnDivide.addEventListener("click", () => (operator = "/"));
+  btnMod.addEventListener("click", () => (operator = "%"));
+  btnPower.addEventListener("click", () => (operator = "^"));
+}
+
 //calculator function
 
 function calculator() {
@@ -148,21 +153,32 @@ function calculator() {
       numberSecond = populateDisplay();
     } else {
       numberFirst = populateDisplay();
+      getOperator();
     }
   } while (!numberFirst && !numberSecond);
-  btnAdd.addEventListener("click", operate("+", numberFirst, numberSecond));
-  btnSubtract.addEventListener(
-    "click",
-    operate("-", numberFirst, numberSecond)
-  );
-  btnMultiply.addEventListener(
-    "click",
-    operate("*", numberFirst, numberSecond)
-  );
-  btnDivide.addEventListener("click", operate("/", numberFirst, numberSecond));
-  btn.addEventListener("click", operate("/", numberFirst, numberSecond));
-  btnDivide.addEventListener("click", operate("/", numberFirst, numberSecond));
   btnEqual.addEventListener("click", () => {
+    switch (operator) {
+      case "+":
+        result = operate("+", numberFirst, numberSecond);
+        break;
+      case "-":
+        result = operate("-", numberFirst, numberSecond);
+        break;
+      case "*":
+        result = operate("*", numberFirst, numberSecond);
+        break;
+      case "/":
+        result = operate("/", numberFirst, numberSecond);
+        break;
+      case "%":
+        result = operate("%", numberFirst, numberSecond);
+        break;
+      case "^":
+        result = operate("^", numberFirst, numberSecond);
+        break;
+    }
     paraDisplay.textContent = `${result}`;
   });
 }
+
+calculator();
