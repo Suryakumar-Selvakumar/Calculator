@@ -1,10 +1,12 @@
 //Variables
 
 let numberFirst, numberSecond, operator, result;
+const arrayFirstNumber = [];
+const arraySecondNumber = [];
 const container = document.querySelector(".container");
+const numbersDisplay = document.querySelector(".numbers-display");
 const calcButtons = document.querySelector(".calculator-buttons");
-const paraDisplay = document.querySelector("#display");
-const btnClear = document.querySelector("#clear");
+const btnAllClear = document.querySelector("#clear");
 const btnChangeSign = document.querySelector("#change-sign");
 const btnMod = document.querySelector("#mod");
 const btnEqual = document.querySelector("#equal");
@@ -55,6 +57,13 @@ function power(a, b) {
   return a ** b;
 }
 
+function allClear() {
+  numberFirst = 0;
+  numberSecond = 0;
+  result = 0;
+  operator = "";
+}
+
 //operate function
 
 function operate(op, num1, num2) {
@@ -74,111 +83,103 @@ function operate(op, num1, num2) {
   }
 }
 
-//function to populate display
-
-function populateDisplay() {
-  const DisplayNum = [];
-  paraDisplay.textContent = "";
-  do {
-    btnOne.addEventListener("click", () => {
-      paraDisplay.textContent += "1";
-      DisplayNum.push(1);
-    });
-    btnTwo.addEventListener("click", () => {
-      paraDisplay.textContent += "2";
-      DisplayNum.push(2);
-    });
-    btnThree.addEventListener("click", () => {
-      paraDisplay.textContent += "3";
-      DisplayNum.push(3);
-    });
-    btnFour.addEventListener("click", () => {
-      paraDisplay.textContent += "4";
-      DisplayNum.push(4);
-    });
-    btnFive.addEventListener("click", () => {
-      paraDisplay.textContent += "5";
-      DisplayNum.push(5);
-    });
-    btnSix.addEventListener("click", () => {
-      paraDisplay.textContent += "6";
-      DisplayNum.push(6);
-    });
-    btnSeven.addEventListener("click", () => {
-      paraDisplay.textContent += "7";
-      DisplayNum.push(7);
-    });
-    btnEight.addEventListener("click", () => {
-      paraDisplay.textContent += "8";
-      DisplayNum.push(8);
-    });
-    btnNine.addEventListener("click", () => {
-      paraDisplay.textContent += "9";
-      DisplayNum.push(9);
-    });
-    btnDot.addEventListener("click", () => {
-      if (!DisplayNum.includes(".")) {
-        paraDisplay.textContent += ".";
-        DisplayNum.push(".");
-      }
-    });
-    btnChangeSign.addEventListener("click", () => {
-      if (!DisplayNum.includes("-")) {
-        DisplayNum.unshift("-");
-      } else {
-        DisplayNum.shift();
-      }
-      paraDisplay.textContent = `${DisplayNum.join("")}`;
-    });
-  } while (DisplayNum.length < 10);
-  return parseFloat(DisplayNum.join(""));
-}
-
-//function to assign operator
-
-function getOperator() {
-  btnAdd.addEventListener("click", () => (operator = "+"));
-  btnSubtract.addEventListener("click", () => (operator = "-"));
-  btnMultiply.addEventListener("click", () => (operator = "*"));
-  btnDivide.addEventListener("click", () => (operator = "/"));
-  btnMod.addEventListener("click", () => (operator = "%"));
-  btnPower.addEventListener("click", () => (operator = "^"));
+function eventListeners(array) {
+  numbersDisplay.innerHTML = "";
+  const paraDisplay = document.createElement("p");
+  btnOne.addEventListener("click", () => {
+    paraDisplay.textContent += "1";
+    array.push(1);
+  });
+  btnTwo.addEventListener("click", () => {
+    paraDisplay.textContent += "2";
+    array.push(2);
+  });
+  btnThree.addEventListener("click", () => {
+    paraDisplay.textContent += "3";
+    array.push(3);
+  });
+  btnFour.addEventListener("click", () => {
+    paraDisplay.textContent += "4";
+    array.push(4);
+  });
+  btnFive.addEventListener("click", () => {
+    paraDisplay.textContent += "5";
+    array.push(5);
+  });
+  btnSix.addEventListener("click", () => {
+    paraDisplay.textContent += "6";
+    array.push(6);
+  });
+  btnSeven.addEventListener("click", () => {
+    paraDisplay.textContent += "7";
+    array.push(7);
+  });
+  btnEight.addEventListener("click", () => {
+    paraDisplay.textContent += "8";
+    array.push(8);
+  });
+  btnNine.addEventListener("click", () => {
+    paraDisplay.textContent += "9";
+    array.push(9);
+  });
+  btnDot.addEventListener("click", () => {
+    if (!array.includes(".")) {
+      paraDisplay.textContent += ".";
+      array.push(".");
+    }
+  });
+  btnChangeSign.addEventListener("click", () => {
+    if (!array.includes("-")) {
+      array.unshift("-");
+    } else {
+      array.shift();
+    }
+    paraDisplay.textContent = `${array.join("")}`;
+  });
+  numbersDisplay.appendChild(paraDisplay);
+  return parseFloat(array.join(""));
 }
 
 //calculator function
 
 function calculator() {
-  do {
-    if (numberFirst) {
-      numberSecond = populateDisplay();
-    } else {
-      numberFirst = populateDisplay();
-      getOperator();
-    }
-  } while (!numberFirst && !numberSecond);
+  const paraDisplay = numbersDisplay.firstChild();
+  if (numberFirst) {
+    btnAdd.addEventListener("click", () => {
+      operator = "+";
+      numberSecond = eventListeners(arraySecondNumber);
+    });
+    btnSubtract.addEventListener("click", () => {
+      operator = "-";
+      numberSecond = eventListeners(arraySecondNumber);
+    });
+    btnMultiply.addEventListener("click", () => {
+      operator = "*";
+      numberSecond = eventListeners(arraySecondNumber);
+    });
+    btnDivide.addEventListener("click", () => {
+      operator = "/";
+      numberSecond = eventListeners(arraySecondNumber);
+    });
+    btnMod.addEventListener("click", () => {
+      operator = "%";
+      numberSecond = eventListeners(arraySecondNumber);
+    });
+    btnPower.addEventListener("click", () => {
+      operator = "^";
+      numberSecond = eventListeners(arraySecondNumber);
+    });
+    result = operate(operator, numberFirst, numberSecond);
+    numberFirst = result;
+  } else {
+    numberFirst = eventListeners(arrayFirstNumber);
+  }
+  btnAllClear.addEventListener("click", allClear);
   btnEqual.addEventListener("click", () => {
-    switch (operator) {
-      case "+":
-        result = operate("+", numberFirst, numberSecond);
-        break;
-      case "-":
-        result = operate("-", numberFirst, numberSecond);
-        break;
-      case "*":
-        result = operate("*", numberFirst, numberSecond);
-        break;
-      case "/":
-        result = operate("/", numberFirst, numberSecond);
-        break;
-      case "%":
-        result = operate("%", numberFirst, numberSecond);
-        break;
-      case "^":
-        result = operate("^", numberFirst, numberSecond);
-        break;
-    }
     paraDisplay.textContent = `${result}`;
   });
 }
 
-calculator();
+while (true) {
+  calculator();
+}
