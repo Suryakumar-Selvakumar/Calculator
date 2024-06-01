@@ -1,10 +1,10 @@
 //Variables
 
 let numberFirst, numberSecond, operator, result;
-const arrayFirstNumber = [];
-const arraySecondNumber = [];
+const array = [];
 const container = document.querySelector(".container");
 const numbersDisplay = document.querySelector(".numbers-display");
+const paraDisplay = document.querySelector("#display");
 const calcButtons = document.querySelector(".calculator-buttons");
 const btnAllClear = document.querySelector("#clear");
 const btnChangeSign = document.querySelector("#change-sign");
@@ -84,48 +84,47 @@ function operate(op, num1, num2) {
 }
 
 function eventListeners(array) {
-  numbersDisplay.innerHTML = "";
-  const paraDisplay = document.createElement("p");
+  array = [];
   btnOne.addEventListener("click", () => {
-    paraDisplay.textContent += "1";
     array.push(1);
+    paraDisplay.textContent = `${array.join("")}`;
   });
   btnTwo.addEventListener("click", () => {
-    paraDisplay.textContent += "2";
     array.push(2);
+    paraDisplay.textContent = `${array.join("")}`;
   });
   btnThree.addEventListener("click", () => {
-    paraDisplay.textContent += "3";
     array.push(3);
+    paraDisplay.textContent = `${array.join("")}`;
   });
   btnFour.addEventListener("click", () => {
-    paraDisplay.textContent += "4";
     array.push(4);
+    paraDisplay.textContent = `${array.join("")}`;
   });
   btnFive.addEventListener("click", () => {
-    paraDisplay.textContent += "5";
     array.push(5);
+    paraDisplay.textContent = `${array.join("")}`;
   });
   btnSix.addEventListener("click", () => {
-    paraDisplay.textContent += "6";
     array.push(6);
+    paraDisplay.textContent = `${array.join("")}`;
   });
   btnSeven.addEventListener("click", () => {
-    paraDisplay.textContent += "7";
     array.push(7);
+    paraDisplay.textContent = `${array.join("")}`;
   });
   btnEight.addEventListener("click", () => {
-    paraDisplay.textContent += "8";
     array.push(8);
+    paraDisplay.textContent = `${array.join("")}`;
   });
   btnNine.addEventListener("click", () => {
-    paraDisplay.textContent += "9";
     array.push(9);
+    paraDisplay.textContent = `${array.join("")}`;
   });
   btnDot.addEventListener("click", () => {
     if (!array.includes(".")) {
-      paraDisplay.textContent += ".";
       array.push(".");
+      paraDisplay.textContent = `${array.join("")}`;
     }
   });
   btnChangeSign.addEventListener("click", () => {
@@ -136,43 +135,40 @@ function eventListeners(array) {
     }
     paraDisplay.textContent = `${array.join("")}`;
   });
-  numbersDisplay.appendChild(paraDisplay);
-  return parseFloat(array.join(""));
 }
 
 //calculator function
 
 function calculator() {
-  const paraDisplay = numbersDisplay.firstChild();
+  eventListeners(array);
+  numberFirst = parseFloat(array.join(""));
   if (numberFirst) {
     btnAdd.addEventListener("click", () => {
       operator = "+";
-      numberSecond = eventListeners(arraySecondNumber);
+      eventListeners(array);
     });
     btnSubtract.addEventListener("click", () => {
       operator = "-";
-      numberSecond = eventListeners(arraySecondNumber);
+      eventListeners(array);
     });
     btnMultiply.addEventListener("click", () => {
       operator = "*";
-      numberSecond = eventListeners(arraySecondNumber);
+      eventListeners(array);
     });
     btnDivide.addEventListener("click", () => {
       operator = "/";
-      numberSecond = eventListeners(arraySecondNumber);
+      eventListeners(array);
     });
     btnMod.addEventListener("click", () => {
       operator = "%";
-      numberSecond = eventListeners(arraySecondNumber);
+      eventListeners(array);
     });
     btnPower.addEventListener("click", () => {
       operator = "^";
-      numberSecond = eventListeners(arraySecondNumber);
+      eventListeners(array);
     });
+    numberSecond = parseFloat(array.join(""));
     result = operate(operator, numberFirst, numberSecond);
-    numberFirst = result;
-  } else {
-    numberFirst = eventListeners(arrayFirstNumber);
   }
   btnAllClear.addEventListener("click", allClear);
   btnEqual.addEventListener("click", () => {
@@ -180,6 +176,4 @@ function calculator() {
   });
 }
 
-while (true) {
-  calculator();
-}
+calculator();
