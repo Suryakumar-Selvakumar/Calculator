@@ -46,7 +46,7 @@ function divide(a, b) {
 }
 
 function mod(a, b) {
-  return Math.mod(a, b);
+  return a % b;
 }
 
 function changeSign(num) {
@@ -58,10 +58,12 @@ function power(a, b) {
 }
 
 function allClear() {
+  numArray.splice(0, numArray.length);
   numberFirst = 0;
   numberSecond = 0;
   result = 0;
   operator = "";
+  paraDisplay.textContent = `${result}`;
 }
 
 //operate function
@@ -83,97 +85,92 @@ function operate(op, num1, num2) {
   }
 }
 
-function eventListeners(array) {
-  btnOne.addEventListener("click", () => {
-    array.push(1);
-    paraDisplay.textContent = `${array.join("")}`;
-  });
-  btnTwo.addEventListener("click", () => {
-    array.push(2);
-    paraDisplay.textContent = `${array.join("")}`;
-  });
-  btnThree.addEventListener("click", () => {
-    array.push(3);
-    paraDisplay.textContent = `${array.join("")}`;
-  });
-  btnFour.addEventListener("click", () => {
-    array.push(4);
-    paraDisplay.textContent = `${array.join("")}`;
-  });
-  btnFive.addEventListener("click", () => {
-    array.push(5);
-    paraDisplay.textContent = `${array.join("")}`;
-  });
-  btnSix.addEventListener("click", () => {
-    array.push(6);
-    paraDisplay.textContent = `${array.join("")}`;
-  });
-  btnSeven.addEventListener("click", () => {
-    array.push(7);
-    paraDisplay.textContent = `${array.join("")}`;
-  });
-  btnEight.addEventListener("click", () => {
-    array.push(8);
-    paraDisplay.textContent = `${array.join("")}`;
-  });
-  btnNine.addEventListener("click", () => {
-    array.push(9);
-    paraDisplay.textContent = `${array.join("")}`;
-  });
-  btnDot.addEventListener("click", () => {
-    if (!array.includes(".")) {
-      array.push(".");
-      paraDisplay.textContent = `${array.join("")}`;
-    }
-  });
-  btnChangeSign.addEventListener("click", () => {
-    if (!array.includes("-")) {
-      array.unshift("-");
-    } else {
-      array.shift();
-    }
-    paraDisplay.textContent = `${array.join("")}`;
-  });
-  return parseFloat(array.join(""));
-}
-
-//calculator function
-
-function calculator() {
-  numberFirst = eventListeners(numArray);
-  console.log(numberFirst);
-  if (numberFirst) {
-    numArray = [];
-    btnAdd.addEventListener("click", () => {
-      operator = "+";
-      numberSecond = eventListeners(numArray);
-    });
-    btnSubtract.addEventListener("click", () => {
-      operator = "-";
-      numberSecond = eventListeners(numArray);
-    });
-    btnMultiply.addEventListener("click", () => {
-      operator = "*";
-      numberSecond = eventListeners(numArray);
-    });
-    btnDivide.addEventListener("click", () => {
-      operator = "/";
-      numberSecond = eventListeners(numArray);
-    });
-    btnMod.addEventListener("click", () => {
-      operator = "%";
-      numberSecond = eventListeners(numArray);
-    });
-    btnPower.addEventListener("click", () => {
-      operator = "^";
-      numberSecond = eventListeners(numArray);
-    });
-    result = operate(operator, numberFirst, numberSecond);
+btnOne.addEventListener("click", () => {
+  numArray.push(1);
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
+btnTwo.addEventListener("click", () => {
+  numArray.push(2);
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
+btnThree.addEventListener("click", () => {
+  numArray.push(3);
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
+btnFour.addEventListener("click", () => {
+  numArray.push(4);
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
+btnFive.addEventListener("click", () => {
+  numArray.push(5);
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
+btnSix.addEventListener("click", () => {
+  numArray.push(6);
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
+btnSeven.addEventListener("click", () => {
+  numArray.push(7);
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
+btnEight.addEventListener("click", () => {
+  numArray.push(8);
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
+btnNine.addEventListener("click", () => {
+  numArray.push(9);
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
+btnDot.addEventListener("click", () => {
+  if (!numArray.includes(".")) {
+    numArray.push(".");
+    paraDisplay.textContent = `${numArray.join("")}`;
   }
-  btnAllClear.addEventListener("click", allClear);
-  btnEqual.addEventListener("click", () => {
-    paraDisplay.textContent = `${result}`;
-  });
-}
+});
+btnChangeSign.addEventListener("click", () => {
+  if (!numArray.includes("-")) {
+    numArray.unshift("-");
+  } else {
+    numArray.shift();
+  }
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
 
-calculator();
+btnAdd.addEventListener("click", () => {
+  operator = "+";
+  numberFirst = parseFloat(numArray.join(""));
+  numArray.splice(0, numArray.length);
+});
+btnSubtract.addEventListener("click", () => {
+  operator = "-";
+  numberFirst = parseFloat(numArray.join(""));
+  numArray.splice(0, numArray.length);
+});
+btnMultiply.addEventListener("click", () => {
+  operator = "*";
+  numberFirst = parseFloat(numArray.join(""));
+  numArray.splice(0, numArray.length);
+});
+btnDivide.addEventListener("click", () => {
+  operator = "/";
+  numberFirst = parseFloat(numArray.join(""));
+  numArray.splice(0, numArray.length);
+});
+btnMod.addEventListener("click", () => {
+  operator = "%";
+  numberFirst = parseFloat(numArray.join(""));
+  numArray.splice(0, numArray.length);
+});
+btnPower.addEventListener("click", () => {
+  operator = "^";
+  numberFirst = parseFloat(numArray.join(""));
+  numArray.splice(0, numArray.length);
+});
+
+btnAllClear.addEventListener("click", allClear);
+btnEqual.addEventListener("click", () => {
+  numberSecond = parseFloat(numArray.join(""));
+  result = operate(operator, numberFirst, numberSecond);
+  console.log(result);
+  paraDisplay.textContent = `${result}`;
+});
