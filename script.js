@@ -1,7 +1,7 @@
 //Variables
 
 let numberFirst, numberSecond, operator, result;
-const array = [];
+const numArray = [];
 const container = document.querySelector(".container");
 const numbersDisplay = document.querySelector(".numbers-display");
 const paraDisplay = document.querySelector("#display");
@@ -84,7 +84,6 @@ function operate(op, num1, num2) {
 }
 
 function eventListeners(array) {
-  array = [];
   btnOne.addEventListener("click", () => {
     array.push(1);
     paraDisplay.textContent = `${array.join("")}`;
@@ -135,39 +134,40 @@ function eventListeners(array) {
     }
     paraDisplay.textContent = `${array.join("")}`;
   });
+  return parseFloat(array.join(""));
 }
 
 //calculator function
 
 function calculator() {
-  eventListeners(array);
-  numberFirst = parseFloat(array.join(""));
+  numberFirst = eventListeners(numArray);
+  console.log(numberFirst);
   if (numberFirst) {
+    numArray = [];
     btnAdd.addEventListener("click", () => {
       operator = "+";
-      eventListeners(array);
+      numberSecond = eventListeners(numArray);
     });
     btnSubtract.addEventListener("click", () => {
       operator = "-";
-      eventListeners(array);
+      numberSecond = eventListeners(numArray);
     });
     btnMultiply.addEventListener("click", () => {
       operator = "*";
-      eventListeners(array);
+      numberSecond = eventListeners(numArray);
     });
     btnDivide.addEventListener("click", () => {
       operator = "/";
-      eventListeners(array);
+      numberSecond = eventListeners(numArray);
     });
     btnMod.addEventListener("click", () => {
       operator = "%";
-      eventListeners(array);
+      numberSecond = eventListeners(numArray);
     });
     btnPower.addEventListener("click", () => {
       operator = "^";
-      eventListeners(array);
+      numberSecond = eventListeners(numArray);
     });
-    numberSecond = parseFloat(array.join(""));
     result = operate(operator, numberFirst, numberSecond);
   }
   btnAllClear.addEventListener("click", allClear);
