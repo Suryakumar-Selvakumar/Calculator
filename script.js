@@ -1,10 +1,14 @@
 //Variables
 
-let numberFirst, numberSecond, operator, result;
+let numberFirst,
+  numberSecond,
+  operator,
+  result = 0;
 const numArray = [];
 const container = document.querySelector(".container");
 const numbersDisplay = document.querySelector(".numbers-display");
 const paraDisplay = document.querySelector("#display");
+paraDisplay.textContent = "0";
 const calcButtons = document.querySelector(".calculator-buttons");
 const btnAllClear = document.querySelector("#clear");
 const btnChangeSign = document.querySelector("#change-sign");
@@ -47,10 +51,6 @@ function divide(a, b) {
 
 function mod(a, b) {
   return a % b;
-}
-
-function changeSign(num) {
-  return (num *= -1);
 }
 
 function power(a, b) {
@@ -121,6 +121,10 @@ btnNine.addEventListener("click", () => {
   numArray.push(9);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
+btnZero.addEventListener("click", () => {
+  numArray.push(0);
+  paraDisplay.textContent = `${numArray.join("")}`;
+});
 btnDot.addEventListener("click", () => {
   if (!numArray.includes(".")) {
     numArray.push(".");
@@ -128,49 +132,93 @@ btnDot.addEventListener("click", () => {
   }
 });
 btnChangeSign.addEventListener("click", () => {
-  if (!numArray.includes("-")) {
-    numArray.unshift("-");
+  if (numberFirst) {
+    numberFirst *= -1;
+    paraDisplay.textContent = `${numberFirst}`;
+  } else if (result) {
+    result *= -1;
+    paraDisplay.textContent = `${result}`;
   } else {
-    numArray.shift();
+    if (!numArray.includes("-")) {
+      numArray.unshift("-");
+    } else {
+      numArray.shift();
+    }
+    paraDisplay.textContent = `${numArray.join("")}`;
   }
-  paraDisplay.textContent = `${numArray.join("")}`;
 });
 
 btnAdd.addEventListener("click", () => {
   operator = "+";
-  numberFirst = parseFloat(numArray.join(""));
+  if (result) {
+    numberFirst = result;
+  } else {
+    numberFirst = parseFloat(numArray.join(""));
+  }
   numArray.splice(0, numArray.length);
 });
 btnSubtract.addEventListener("click", () => {
   operator = "-";
-  numberFirst = parseFloat(numArray.join(""));
+  if (result) {
+    numberFirst = result;
+  } else {
+    numberFirst = parseFloat(numArray.join(""));
+  }
   numArray.splice(0, numArray.length);
 });
 btnMultiply.addEventListener("click", () => {
   operator = "*";
-  numberFirst = parseFloat(numArray.join(""));
+  if (result) {
+    numberFirst = result;
+  } else {
+    numberFirst = parseFloat(numArray.join(""));
+  }
   numArray.splice(0, numArray.length);
 });
 btnDivide.addEventListener("click", () => {
   operator = "/";
-  numberFirst = parseFloat(numArray.join(""));
+  if (result) {
+    numberFirst = result;
+  } else {
+    numberFirst = parseFloat(numArray.join(""));
+  }
   numArray.splice(0, numArray.length);
 });
 btnMod.addEventListener("click", () => {
   operator = "%";
-  numberFirst = parseFloat(numArray.join(""));
+  if (result) {
+    numberFirst = result;
+  } else {
+    numberFirst = parseFloat(numArray.join(""));
+  }
   numArray.splice(0, numArray.length);
 });
 btnPower.addEventListener("click", () => {
   operator = "^";
-  numberFirst = parseFloat(numArray.join(""));
+  if (result) {
+    numberFirst = result;
+  } else {
+    numberFirst = parseFloat(numArray.join(""));
+  }
   numArray.splice(0, numArray.length);
 });
 
 btnAllClear.addEventListener("click", allClear);
 btnEqual.addEventListener("click", () => {
-  numberSecond = parseFloat(numArray.join(""));
-  result = operate(operator, numberFirst, numberSecond);
-  console.log(result);
-  paraDisplay.textContent = `${result}`;
+  if (numberFirst === undefined) {
+    paraDisplay.textContent = "0";
+  } else {
+    numberSecond = parseFloat(numArray.join(""));
+    result = operate(operator, numberFirst, numberSecond);
+    if (!isFinite(result)) {
+      paraDisplay.textContent = "A for Effort";
+    } else {
+      if (result.toString().includes(".")) {
+        result = result.toFixed(2);
+      }
+      paraDisplay.textContent = `${result}`;
+    }
+    numberFirst = 0;
+    numberSecond = 0;
+  }
 });
