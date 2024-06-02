@@ -28,7 +28,7 @@ const btnThree = document.querySelector("#three");
 const btnAdd = document.querySelector("#add");
 const btnZero = document.querySelector("#zero");
 const btnDot = document.querySelector("#dot");
-const btnPower = document.querySelector("#power");
+const btnBackSpace = document.querySelector("#back-space");
 const btnSubtract = document.querySelector("#subtract");
 
 //Math Functions
@@ -51,10 +51,6 @@ function divide(a, b) {
 
 function mod(a, b) {
   return a % b;
-}
-
-function power(a, b) {
-  return a ** b;
 }
 
 function allClear() {
@@ -80,105 +76,145 @@ function operate(op, num1, num2) {
       return divide(num1, num2);
     case "%":
       return mod(num1, num2);
-    case "^":
-      return power(num1, num2);
   }
 }
 
 btnOne.addEventListener("click", () => {
+  result = 0;
   numArray.push(1);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
 btnTwo.addEventListener("click", () => {
+  result = 0;
   numArray.push(2);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
 btnThree.addEventListener("click", () => {
+  result = 0;
   numArray.push(3);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
 btnFour.addEventListener("click", () => {
+  result = 0;
   numArray.push(4);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
 btnFive.addEventListener("click", () => {
+  result = 0;
   numArray.push(5);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
 btnSix.addEventListener("click", () => {
+  result = 0;
   numArray.push(6);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
 btnSeven.addEventListener("click", () => {
+  result = 0;
   numArray.push(7);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
 btnEight.addEventListener("click", () => {
+  result = 0;
   numArray.push(8);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
 btnNine.addEventListener("click", () => {
+  result = 0;
   numArray.push(9);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
 btnZero.addEventListener("click", () => {
+  result = 0;
   numArray.push(0);
   paraDisplay.textContent = `${numArray.join("")}`;
 });
 btnDot.addEventListener("click", () => {
   if (!numArray.includes(".")) {
     numArray.push(".");
-    paraDisplay.textContent = `${numArray.join("")}`;
-  }
-});
-btnChangeSign.addEventListener("click", () => {
-  if (numberFirst) {
-    numberFirst *= -1;
-    paraDisplay.textContent = `${numberFirst}`;
-  } else if (result) {
-    result *= -1;
-    paraDisplay.textContent = `${result}`;
-  } else {
-    if (!numArray.includes("-")) {
-      numArray.unshift("-");
-    } else {
-      numArray.shift();
+    if (numArray[0] == ".") {
+      numArray.unshift("0");
     }
     paraDisplay.textContent = `${numArray.join("")}`;
   }
 });
 
+btnChangeSign.addEventListener("click", () => {
+  if (result) {
+    result *= -1;
+    numberFirst = result;
+    paraDisplay.textContent = `${numberFirst}`;
+  } else {
+    if (numArray.length == 0) {
+      if (numberFirst) {
+        numberFirst *= -1;
+        paraDisplay.textContent = `${numberFirst}`;
+      }
+    } else {
+      if (!numArray.includes("-")) {
+        numArray.unshift("-");
+      } else {
+        numArray.shift();
+      }
+      paraDisplay.textContent = `${numArray.join("")}`;
+    }
+  }
+});
+
 btnAdd.addEventListener("click", () => {
   operator = "+";
-  if (result) {
-    numberFirst = result;
+  if (numberFirst) {
+    if (result) {
+      numberFirst = result;
+      numberSecond = numberFirst;
+      result = operate(operator, numberFirst, numberSecond);
+      paraDisplay.textContent = `${result}`;
+    }
   } else {
     numberFirst = parseFloat(numArray.join(""));
   }
   numArray.splice(0, numArray.length);
 });
+
 btnSubtract.addEventListener("click", () => {
   operator = "-";
-  if (result) {
-    numberFirst = result;
+  if (numberFirst) {
+    if (result) {
+      numberFirst = result;
+      numberSecond = numberFirst;
+      result = operate(operator, numberFirst, numberSecond);
+      paraDisplay.textContent = `${result}`;
+    }
   } else {
     numberFirst = parseFloat(numArray.join(""));
   }
   numArray.splice(0, numArray.length);
 });
+
 btnMultiply.addEventListener("click", () => {
   operator = "*";
-  if (result) {
-    numberFirst = result;
+  if (numberFirst) {
+    if (result) {
+      numberFirst = result;
+      numberSecond = numberFirst;
+      result = operate(operator, numberFirst, numberSecond);
+      paraDisplay.textContent = `${result}`;
+    }
   } else {
     numberFirst = parseFloat(numArray.join(""));
   }
   numArray.splice(0, numArray.length);
 });
+
 btnDivide.addEventListener("click", () => {
   operator = "/";
-  if (result) {
-    numberFirst = result;
+  if (numberFirst) {
+    if (result) {
+      numberFirst = result;
+      numberSecond = numberFirst;
+      result = operate(operator, numberFirst, numberSecond);
+      paraDisplay.textContent = `${result}`;
+    }
   } else {
     numberFirst = parseFloat(numArray.join(""));
   }
@@ -186,17 +222,13 @@ btnDivide.addEventListener("click", () => {
 });
 btnMod.addEventListener("click", () => {
   operator = "%";
-  if (result) {
-    numberFirst = result;
-  } else {
-    numberFirst = parseFloat(numArray.join(""));
-  }
-  numArray.splice(0, numArray.length);
-});
-btnPower.addEventListener("click", () => {
-  operator = "^";
-  if (result) {
-    numberFirst = result;
+  if (numberFirst) {
+    if (result) {
+      numberFirst = result;
+      numberSecond = numberFirst;
+      result = operate(operator, numberFirst, numberSecond);
+      paraDisplay.textContent = `${result}`;
+    }
   } else {
     numberFirst = parseFloat(numArray.join(""));
   }
@@ -204,21 +236,36 @@ btnPower.addEventListener("click", () => {
 });
 
 btnAllClear.addEventListener("click", allClear);
+btnBackSpace.addEventListener("click", () => {
+  if (result) {
+    result = 0;
+    paraDisplay.textContent = `${result}`;
+  } else {
+    numArray.pop();
+    paraDisplay.textContent = `${numArray.join("")}`;
+  }
+});
+
 btnEqual.addEventListener("click", () => {
   if (numberFirst === undefined) {
     paraDisplay.textContent = "0";
   } else {
     numberSecond = parseFloat(numArray.join(""));
-    result = operate(operator, numberFirst, numberSecond);
-    if (!isFinite(result)) {
-      paraDisplay.textContent = "A for Effort";
-    } else {
-      if (result.toString().includes(".")) {
-        result = result.toFixed(2);
-      }
+    if (!numberSecond) {
       paraDisplay.textContent = `${result}`;
+    } else {
+      result = operate(operator, numberFirst, numberSecond);
+      if (result == "Infinity") {
+        paraDisplay.textContent = "A for Effort";
+      } else {
+        if (result.toString().includes(".")) {
+          result = result.toFixed(2);
+        }
+        paraDisplay.textContent = `${result}`;
+        numArray.splice(0, numArray.length);
+      }
     }
-    numberFirst = 0;
-    numberSecond = 0;
   }
 });
+
+//btnChangeSign bug
