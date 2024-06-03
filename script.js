@@ -188,7 +188,7 @@ btnEqual.addEventListener("click", () => {
     } else {
       result = operate(operator, numberFirst, numberSecond);
       if (result == "Infinity") {
-        paraDisplay.textContent = "A for Effort";
+        paraDisplay.textContent = "Haha, Nice Try!";
       } else {
         if (result.toString().includes(".")) {
           result = result.toFixed(2);

@@ -1,0 +1,49 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Orbitron", sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 352px;
+  height: auto;
+  gap: 5px;
+  background-color: aqua;
+  padding: 6px;
+}
+
+.calculator-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  padding: 3px;
+}
+
+.calculator-buttons button {
+  padding: 5px 10px;
+  font-size: 36px;
+  font-family: "Orbitron", sans-serif;
+  width: 85px;
+}
+
+.display-container {
+  display: flex;
+  align-self: flex-end;
+  justify-content: flex-end;
+  border: solid 2px black;
+  width: 348px;
+}
+
+p {
+  font-size: 48px;
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
