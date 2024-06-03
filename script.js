@@ -79,56 +79,23 @@ function operate(op, num1, num2) {
   }
 }
 
-btnOne.addEventListener("click", () => {
+function handleNumberInput(num) {
   result = 0;
-  numArray.push(1);
+  numArray.push(num);
   paraDisplay.textContent = `${numArray.join("")}`;
-});
-btnTwo.addEventListener("click", () => {
-  result = 0;
-  numArray.push(2);
-  paraDisplay.textContent = `${numArray.join("")}`;
-});
-btnThree.addEventListener("click", () => {
-  result = 0;
-  numArray.push(3);
-  paraDisplay.textContent = `${numArray.join("")}`;
-});
-btnFour.addEventListener("click", () => {
-  result = 0;
-  numArray.push(4);
-  paraDisplay.textContent = `${numArray.join("")}`;
-});
-btnFive.addEventListener("click", () => {
-  result = 0;
-  numArray.push(5);
-  paraDisplay.textContent = `${numArray.join("")}`;
-});
-btnSix.addEventListener("click", () => {
-  result = 0;
-  numArray.push(6);
-  paraDisplay.textContent = `${numArray.join("")}`;
-});
-btnSeven.addEventListener("click", () => {
-  result = 0;
-  numArray.push(7);
-  paraDisplay.textContent = `${numArray.join("")}`;
-});
-btnEight.addEventListener("click", () => {
-  result = 0;
-  numArray.push(8);
-  paraDisplay.textContent = `${numArray.join("")}`;
-});
-btnNine.addEventListener("click", () => {
-  result = 0;
-  numArray.push(9);
-  paraDisplay.textContent = `${numArray.join("")}`;
-});
-btnZero.addEventListener("click", () => {
-  result = 0;
-  numArray.push(0);
-  paraDisplay.textContent = `${numArray.join("")}`;
-});
+}
+
+btnOne.addEventListener("click", () => handleNumberInput(1));
+btnTwo.addEventListener("click", () => handleNumberInput(2));
+btnThree.addEventListener("click", () => handleNumberInput(3));
+btnFour.addEventListener("click", () => handleNumberInput(4));
+btnFive.addEventListener("click", () => handleNumberInput(5));
+btnSix.addEventListener("click", () => handleNumberInput(6));
+btnSeven.addEventListener("click", () => handleNumberInput(7));
+btnEight.addEventListener("click", () => handleNumberInput(8));
+btnNine.addEventListener("click", () => handleNumberInput(9));
+btnZero.addEventListener("click", () => handleNumberInput(0));
+
 btnDot.addEventListener("click", () => {
   if (!numArray.includes(".")) {
     numArray.push(".");
@@ -161,79 +128,39 @@ btnChangeSign.addEventListener("click", () => {
   }
 });
 
-btnAdd.addEventListener("click", () => {
-  operator = "+";
-  if (numberFirst) {
-    if (result) {
-      numberFirst = result;
-      numberSecond = numberFirst;
+function handleOperatorPress(newOperator) {
+  if (numberFirst !== undefined) {
+    if (numArray.length > 0) {
+      numberSecond = parseFloat(numArray.join(""));
       result = operate(operator, numberFirst, numberSecond);
       paraDisplay.textContent = `${result}`;
+      numberFirst = result;
+      numberSecond = undefined;
     }
+    operator = newOperator;
+    numArray.splice(0, numArray.length);
   } else {
     numberFirst = parseFloat(numArray.join(""));
+    operator = newOperator;
+    numArray.splice(0, numArray.length);
   }
-  numArray.splice(0, numArray.length);
-});
+}
 
-btnSubtract.addEventListener("click", () => {
-  operator = "-";
-  if (numberFirst) {
-    if (result) {
-      numberFirst = result;
-      numberSecond = numberFirst;
-      result = operate(operator, numberFirst, numberSecond);
-      paraDisplay.textContent = `${result}`;
-    }
-  } else {
-    numberFirst = parseFloat(numArray.join(""));
-  }
-  numArray.splice(0, numArray.length);
-});
+btnAdd.addEventListener("click", () => handleOperatorPress("+"));
+btnSubtract.addEventListener("click", () => handleOperatorPress("-"));
+btnMultiply.addEventListener("click", () => handleOperatorPress("*"));
+btnDivide.addEventListener("click", () => handleOperatorPress("/"));
+btnMod.addEventListener("click", () => handleOperatorPress("%"));
 
-btnMultiply.addEventListener("click", () => {
-  operator = "*";
-  if (numberFirst) {
-    if (result) {
-      numberFirst = result;
-      numberSecond = numberFirst;
-      result = operate(operator, numberFirst, numberSecond);
-      paraDisplay.textContent = `${result}`;
-    }
-  } else {
-    numberFirst = parseFloat(numArray.join(""));
-  }
-  numArray.splice(0, numArray.length);
-});
+function handleOperatorDoublePress(newOperator) {
+  
+}
 
-btnDivide.addEventListener("click", () => {
-  operator = "/";
-  if (numberFirst) {
-    if (result) {
-      numberFirst = result;
-      numberSecond = numberFirst;
-      result = operate(operator, numberFirst, numberSecond);
-      paraDisplay.textContent = `${result}`;
-    }
-  } else {
-    numberFirst = parseFloat(numArray.join(""));
-  }
-  numArray.splice(0, numArray.length);
-});
-btnMod.addEventListener("click", () => {
-  operator = "%";
-  if (numberFirst) {
-    if (result) {
-      numberFirst = result;
-      numberSecond = numberFirst;
-      result = operate(operator, numberFirst, numberSecond);
-      paraDisplay.textContent = `${result}`;
-    }
-  } else {
-    numberFirst = parseFloat(numArray.join(""));
-  }
-  numArray.splice(0, numArray.length);
-});
+btnAdd.addEventListener("dblclick", () => handleOperatorDoublePress("+"));
+btnSubtract.addEventListener("dblclick", () => handleOperatorDoublePress("-"));
+btnMultiply.addEventListener("dblclick", () => handleOperatorDoublePress("*"));
+btnDivide.addEventListener("dblclick", () => handleOperatorDoublePress("/"));
+btnMod.addEventListener("dblclick", () => handleOperatorDoublePress("%"));
 
 btnAllClear.addEventListener("click", allClear);
 btnBackSpace.addEventListener("click", () => {
