@@ -2,10 +2,12 @@ body {
   display: flex;
   min-height: 97vh;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   font-family: "Orbitron", sans-serif;
-  background-color: #fbf1ea;
+  background-color: azure;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
@@ -51,7 +53,7 @@ body {
 #multiply,
 #divide,
 #mod {
-  background-color: #e5cdb0;
+  background-color: #f0cc18;
   color: black;
 }
 
@@ -78,4 +80,17 @@ p {
   margin-bottom: 20px;
   color: #e9ecef;
   overflow: hidden;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-self: stretch;
+  margin-bottom: -10px;
+}
+
+a {
+  font-size: 30px;
+  color: rgb(14, 13, 13);
+  text-decoration: none;
 }

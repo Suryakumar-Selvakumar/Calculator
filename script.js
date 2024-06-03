@@ -55,8 +55,8 @@ function mod(a, b) {
 
 function allClear() {
   numArray.splice(0, numArray.length);
-  numberFirst = 0;
-  numberSecond = 0;
+  numberFirst = undefined;
+  numberSecond = undefined;
   result = 0;
   operator = "";
   paraDisplay.textContent = `${result}`;
@@ -82,7 +82,12 @@ function operate(op, num1, num2) {
 function handleNumberInput(num) {
   result = 0;
   numArray.push(num);
-  paraDisplay.textContent = `${numArray.slice(0, 8).join("")}`;
+  if (numberFirst === undefined && numArray[0] === 0) {
+    numArray.shift();
+    paraDisplay.textContent = "0";
+  } else {
+    paraDisplay.textContent = `${numArray.slice(0, 8).join("")}`;
+  }
 }
 
 btnOne.addEventListener("click", () => handleNumberInput(1));
@@ -129,7 +134,7 @@ btnChangeSign.addEventListener("click", () => {
 });
 
 function handleOperatorPress(newOperator) {
-  if (numberFirst === undefined) {
+  if (numberFirst !== undefined) {
     if (numArray.length > 0) {
       numberSecond = parseFloat(numArray.slice(0, 8).join(""));
       result = operate(operator, numberFirst, numberSecond);
@@ -161,8 +166,8 @@ function handleOperatorDoublePress(newOperator) {
     numberFirst = result;
     numberSecond = numberFirst;
     result = operate(newOperator, numberFirst, numberSecond);
-    if (result !== undefined && result.toString().length > 8) {
-      paraDisplay.textContent = `${result.toExponential()}`;
+    if (result.toString().length > 8) {
+      paraDisplay.textContent = `${result.toExponential(2)}`;
     } else {
       paraDisplay.textContent = `${result}`;
     }
@@ -191,7 +196,7 @@ btnEqual.addEventListener("click", () => {
     paraDisplay.textContent = "0";
   } else {
     numberSecond = parseFloat(numArray.slice(0, 8).join(""));
-    if (!numberSecond) {
+    if (numberSecond === undefined) {
       paraDisplay.textContent = `${result}`;
     } else {
       result = operate(operator, numberFirst, numberSecond);
