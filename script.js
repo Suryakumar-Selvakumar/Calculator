@@ -82,7 +82,7 @@ function operate(op, num1, num2) {
 function handleNumberInput(num) {
   result = 0;
   numArray.push(num);
-  paraDisplay.textContent = `${numArray.join("")}`;
+  paraDisplay.textContent = `${numArray.slice(0, 8).join("")}`;
 }
 
 btnOne.addEventListener("click", () => handleNumberInput(1));
@@ -102,7 +102,7 @@ btnDot.addEventListener("click", () => {
     if (numArray[0] == ".") {
       numArray.unshift("0");
     }
-    paraDisplay.textContent = `${numArray.join("")}`;
+    paraDisplay.textContent = `${numArray.slice(0, 8).join("")}`;
   }
 });
 
@@ -123,24 +123,28 @@ btnChangeSign.addEventListener("click", () => {
       } else {
         numArray.shift();
       }
-      paraDisplay.textContent = `${numArray.join("")}`;
+      paraDisplay.textContent = `${numArray.slice(0, 8).join("")}`;
     }
   }
 });
 
 function handleOperatorPress(newOperator) {
-  if (numberFirst !== undefined) {
+  if (numberFirst === undefined) {
     if (numArray.length > 0) {
-      numberSecond = parseFloat(numArray.join(""));
+      numberSecond = parseFloat(numArray.slice(0, 8).join(""));
       result = operate(operator, numberFirst, numberSecond);
-      paraDisplay.textContent = `${result}`;
+      if (result !== undefined && result.toString().length > 8) {
+        paraDisplay.textContent = `${result.toExponential()}`;
+      } else {
+        paraDisplay.textContent = `${result}`;
+      }
       numberFirst = result;
       numberSecond = undefined;
     }
     operator = newOperator;
     numArray.splice(0, numArray.length);
   } else {
-    numberFirst = parseFloat(numArray.join(""));
+    numberFirst = parseFloat(numArray.slice(0, 8).join(""));
     operator = newOperator;
     numArray.splice(0, numArray.length);
   }
@@ -157,7 +161,11 @@ function handleOperatorDoublePress(newOperator) {
     numberFirst = result;
     numberSecond = numberFirst;
     result = operate(newOperator, numberFirst, numberSecond);
-    paraDisplay.textContent = `${result}`;
+    if (result !== undefined && result.toString().length > 8) {
+      paraDisplay.textContent = `${result.toExponential()}`;
+    } else {
+      paraDisplay.textContent = `${result}`;
+    }
   }
 }
 
@@ -174,7 +182,7 @@ btnBackSpace.addEventListener("click", () => {
     paraDisplay.textContent = `${result}`;
   } else {
     numArray.pop();
-    paraDisplay.textContent = `${numArray.join("")}`;
+    paraDisplay.textContent = `${numArray.slice(0, 8).join("")}`;
   }
 });
 
@@ -182,7 +190,7 @@ btnEqual.addEventListener("click", () => {
   if (numberFirst === undefined) {
     paraDisplay.textContent = "0";
   } else {
-    numberSecond = parseFloat(numArray.join(""));
+    numberSecond = parseFloat(numArray.slice(0, 8).join(""));
     if (!numberSecond) {
       paraDisplay.textContent = `${result}`;
     } else {
@@ -193,7 +201,11 @@ btnEqual.addEventListener("click", () => {
         if (result.toString().includes(".")) {
           result = result.toFixed(2);
         }
-        paraDisplay.textContent = `${result}`;
+        if (result !== undefined && result.toString().length > 8) {
+          paraDisplay.textContent = `${result.toExponential()}`;
+        } else {
+          paraDisplay.textContent = `${result}`;
+        }
         numArray.splice(0, numArray.length);
       }
     }
