@@ -153,7 +153,12 @@ btnDivide.addEventListener("click", () => handleOperatorPress("/"));
 btnMod.addEventListener("click", () => handleOperatorPress("%"));
 
 function handleOperatorDoublePress(newOperator) {
-  
+  if (numberFirst !== undefined) {
+    numberFirst = result;
+    numberSecond = numberFirst;
+    result = operate(newOperator, numberFirst, numberSecond);
+    paraDisplay.textContent = `${result}`;
+  }
 }
 
 btnAdd.addEventListener("dblclick", () => handleOperatorDoublePress("+"));
