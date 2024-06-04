@@ -60,6 +60,11 @@ function allClear() {
   result = 0;
   operator = "";
   paraDisplay.textContent = `${result}`;
+  document
+    .querySelectorAll("#add, #subtract, #multiply, #divide, #mod")
+    .forEach((button) => {
+      button.classList.remove("active");
+    });
 }
 
 //operate function
@@ -139,7 +144,11 @@ function handleOperatorPress(newOperator) {
       numberSecond = parseFloat(numArray.slice(0, 8).join(""));
       result = operate(operator, numberFirst, numberSecond);
       if (result !== undefined && result.toString().length > 8) {
-        paraDisplay.textContent = `${result.toExponential()}`;
+        if (result < 10000000) {
+          paraDisplay.textContent = `${result.toFixed(2)}`;
+        } else {
+          paraDisplay.textContent = `${result.toExponential(2)}`;
+        }
       } else {
         paraDisplay.textContent = `${result}`;
       }
@@ -147,19 +156,21 @@ function handleOperatorPress(newOperator) {
       numberSecond = undefined;
     }
     operator = newOperator;
+    numberFirst = result;
     numArray.splice(0, numArray.length);
   } else {
     numberFirst = parseFloat(numArray.slice(0, 8).join(""));
     operator = newOperator;
     numArray.splice(0, numArray.length);
   }
+  handleOperatorClick(event);
 }
 
-btnAdd.addEventListener("click", () => handleOperatorPress("+"));
-btnSubtract.addEventListener("click", () => handleOperatorPress("-"));
-btnMultiply.addEventListener("click", () => handleOperatorPress("*"));
-btnDivide.addEventListener("click", () => handleOperatorPress("/"));
-btnMod.addEventListener("click", () => handleOperatorPress("%"));
+btnAdd.addEventListener("click", (event) => handleOperatorPress("+"));
+btnSubtract.addEventListener("click", (event) => handleOperatorPress("-"));
+btnMultiply.addEventListener("click", (event) => handleOperatorPress("*"));
+btnDivide.addEventListener("click", (event) => handleOperatorPress("/"));
+btnMod.addEventListener("click", (event) => handleOperatorPress("%"));
 
 function handleOperatorDoublePress(newOperator) {
   if (numberFirst !== undefined) {
@@ -201,7 +212,7 @@ btnEqual.addEventListener("click", () => {
     } else {
       result = operate(operator, numberFirst, numberSecond);
       if (result == "Infinity") {
-        paraDisplay.textContent = "Haha, Nice Try!";
+        paraDisplay.innerText = `Nice Try lol`;
       } else {
         if (result.toString().includes(".")) {
           result = result.toFixed(2);
@@ -215,6 +226,25 @@ btnEqual.addEventListener("click", () => {
       }
     }
   }
+  document
+    .querySelectorAll("#add, #subtract, #multiply, #divide, #mod")
+    .forEach((button) => {
+      button.classList.remove("active");
+    });
 });
 
-//btnChangeSign bug
+function handleOperatorClick(event) {
+  document
+    .querySelectorAll("#add, #subtract, #multiply, #divide, #mod")
+    .forEach((button) => {
+      button.classList.remove("active");
+    });
+
+  event.target.classList.add("active");
+}
+
+document
+  .querySelectorAll("#add, #subtract, #multiply, #divide, #mod")
+  .forEach((button) => {
+    button.addEventListener("click", handleOperatorClick);
+  });

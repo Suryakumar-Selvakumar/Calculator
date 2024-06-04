@@ -36,6 +36,7 @@ body {
   width: 96px;
   background-color: #495057;
   color: #e9ecef;
+  box-sizing: border-box;
 }
 
 #clear {
@@ -53,12 +54,20 @@ body {
 #multiply,
 #divide,
 #mod {
-  background-color: #f0cc18;
+  background-color: #dbb42c;
   color: black;
 }
 
+#add.active,
+#subtract.active,
+#multiply.active,
+#divide.active,
+#mod.active {
+  border: dotted 1px black;
+}
+
 #equal {
-  background-color: #bfd200;
+  background-color: #aacc00;
   color: black;
 }
 
@@ -79,7 +88,6 @@ p {
   margin-top: 20px;
   margin-bottom: 20px;
   color: #e9ecef;
-  overflow: hidden;
 }
 
 .footer {
