@@ -7,3 +7,5 @@ A simple calculator created with HTML, CSS, and JS. <br>
 &emsp;&emsp;2. All clear button. <br>
 &emsp;&emsp;3. Backspace button. <br>
 &emsp;&emsp;4. Add, Subtract, Multiply, Divide, Mod, Decimal Point, and Change Sign operations. <br>
+
+#### Demo - https://suryakumar-selvakumar.github.io/Calculator/
